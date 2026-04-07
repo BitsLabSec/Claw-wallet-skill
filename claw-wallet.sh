@@ -21,10 +21,10 @@ if [ "${1:-}" = "upgrade" ]; then
     shift
     cd "$SCRIPT_DIR"
     stop_sandbox
-    CLAW_WALLET_BASE_URL="${CLAW_WALLET_BASE_URL:-https://test.clawwallet.cc}"
-    echo "Upgrading from ${CLAW_WALLET_BASE_URL}/install ..."
+    CLAW_WALLET_BASE_URL="${CLAW_WALLET_BASE_URL:-https://test.clawwallet.cc/skills}"
+    echo "Upgrading from ${CLAW_WALLET_BASE_URL}/install.sh ..."
     export CLAW_WALLET_SKIP_INIT=1
-    curl -fsSL "${CLAW_WALLET_BASE_URL}/install" | bash
+    curl -fsSL "${CLAW_WALLET_BASE_URL}/install.sh" | bash
     exit 0
 fi
 

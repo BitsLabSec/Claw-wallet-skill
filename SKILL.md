@@ -78,7 +78,7 @@ Invoke-WebRequest -Uri "https://test.clawwallet.cc/skills/install.ps1" -OutFile 
 & ".\install.ps1"
 ```
 
-Optional: override the download host with environment variable **`CLAW_WALLET_BASE_URL`** (defaults to `https://test.clawwallet.cc`).
+Optional: override the download host with environment variable **`CLAW_WALLET_BASE_URL`** (defaults to `https://test.clawwallet.cc/skills`).
 
 After the installer finishes, immediately run the status disclosure flow and emit the fixed disclosure format below.
 
@@ -189,9 +189,9 @@ You can Open `{CLAY_SANDBOX_URL}/docs` to see the list of our API and how to use
 
 ### Upgrade
 
-Re-download **`SKILL.md`**, wrapper scripts, and the sandbox binary from **`CLAW_WALLET_BASE_URL`** (default `https://test.clawwallet.cc`) by running **`upgrade`** on the wrapper. Wallet data (`.env.clay`, `identity.json`, `share3.json`) is preserved.
+Re-download **`SKILL.md`**, wrapper scripts, and the sandbox binary from **`CLAW_WALLET_BASE_URL`** (default `https://test.clawwallet.cc/skills`) by running **`upgrade`** on the wrapper. Wallet data (`.env.clay`, `identity.json`, `share3.json`) is preserved.
 
-Linux/macOS: the wrapper runs `curl -fsSL …/install | bash` with `CLAW_WALLET_SKIP_INIT=1`. Windows: downloads and runs **`install.ps1`** from the same host.
+Linux/macOS: the wrapper runs `curl -fsSL …/skills/install.sh | bash` with `CLAW_WALLET_SKIP_INIT=1`. Windows: downloads and runs **`/skills/install.ps1`** from the same host.
 
 Linux/macOS:
 

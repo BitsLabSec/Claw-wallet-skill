@@ -42,7 +42,7 @@ All files live in one directory:
 
 ### Install
 
-Before downloading or running the installer, first check from the **workspace root** whether **`skills/claw-wallet`** already exists (same path as in **Installation path** below). Use that check to decide whether this is a reuse flow or a new install flow.
+Before downloading or running the installer, first check from the **workspace root** whether **`skills/claw-wallet-test`** already exists (same path as in **Installation path** below). Use that check to decide whether this is a reuse flow or a new install flow.
 
 - **If it exists:** Do **not** run the remote installer or `install.sh` / `install.ps1` bootstrap unless the user explicitly wants a reinstall.
   1. Start the sandbox first.
@@ -64,21 +64,21 @@ Skill files are hosted at **`https://test.clawwallet.cc`**. Create the skill dir
 Linux/macOS:
 
 ```bash
-mkdir -p skills/claw-wallet
-cd skills/claw-wallet
-curl -fsSL https://test.clawwallet.cc/install | bash
+mkdir -p skills/claw-wallet-test
+cd skills/claw-wallet-test
+curl -fsSL https://test.clawwallet.cc/skills/install.sh | bash
 ```
 
-Windows PowerShell (from workspace root; run after creating `skills\claw-wallet`):
+Windows PowerShell (from workspace root; run after creating `skills\claw-wallet-test`):
 
 ```powershell
-New-Item -ItemType Directory -Path "skills\claw-wallet" -Force | Out-Null
-Set-Location "skills\claw-wallet"
-Invoke-WebRequest -Uri "https://test.clawwallet.cc/install.ps1" -OutFile "install.ps1" -UseBasicParsing
+New-Item -ItemType Directory -Path "skills\claw-wallet-test" -Force | Out-Null
+Set-Location "skills\claw-wallet-test"
+Invoke-WebRequest -Uri "https://test.clawwallet.cc/skills/install.ps1" -OutFile "install.ps1" -UseBasicParsing
 & ".\install.ps1"
 ```
 
-Optional: override the download host with environment variable **`CLAW_WALLET_BASE_URL`** (defaults to `https://test.clawwallet.cc`).
+Optional: override the download host with environment variable **`CLAW_WALLET_BASE_URL`** (defaults to `https://test.clawwallet.cc/skills`).
 
 After the installer finishes, immediately run the status disclosure flow and emit the fixed disclosure format below.
 
@@ -189,9 +189,9 @@ You can Open `{CLAY_SANDBOX_URL}/docs` to see the list of our API and how to use
 
 ### Upgrade
 
-Re-download **`SKILL.md`**, wrapper scripts, and the sandbox binary from **`CLAW_WALLET_BASE_URL`** (default `https://test.clawwallet.cc`) by running **`upgrade`** on the wrapper. Wallet data (`.env.clay`, `identity.json`, `share3.json`) is preserved.
+Re-download **`SKILL.md`**, wrapper scripts, and the sandbox binary from **`CLAW_WALLET_BASE_URL`** (default `https://test.clawwallet.cc/skills`) by running **`upgrade`** on the wrapper. Wallet data (`.env.clay`, `identity.json`, `share3.json`) is preserved.
 
-Linux/macOS: the wrapper runs `curl -fsSL …/install | bash` with `CLAW_WALLET_SKIP_INIT=1`. Windows: downloads and runs **`install.ps1`** from the same host.
+Linux/macOS: the wrapper runs `curl -fsSL …/skills/install.sh | bash` with `CLAW_WALLET_SKIP_INIT=1`. Windows: downloads and runs **`/skills/install.ps1`** from the same host.
 
 Linux/macOS:
 

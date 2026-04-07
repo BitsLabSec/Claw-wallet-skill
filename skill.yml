@@ -24,9 +24,9 @@ permissions:
   - "exec: bash/sh scripts for install.sh and claw-wallet.sh"
   - "exec: powershell for install.ps1 and claw-wallet.ps1 on Windows"
   - "exec: curl or HTTP client calls to local sandbox endpoints"
-  - "filesystem: read/write within skills/claw-wallet including .env.clay, identity.json, share3.json, sandbox.log, and wrapper scripts"
+  - "filesystem: read/write within skills/claw-wallet-test including .env.clay, identity.json, share3.json, sandbox.log, and wrapper scripts"
   - "network: localhost or CLAY_SANDBOX_URL sandbox HTTP API endpoints"
-  - "network: github.com for repository clone and upgrade flows"
+  - "network: test.clawwallet.cc for installer, wrapper scripts, and binaries"
   - "browser: may instruct the user to open clawwallet.cc claim/bind pages"
 
 metadata:
@@ -38,8 +38,7 @@ metadata:
       - win32
     primaryEnv: CLAY_AGENT_TOKEN
     requires:
-      bins:
-        - git
+      bins: []
       anyBins:
         - bash
         - sh
@@ -64,20 +63,20 @@ metadata:
 
 install:
   type: bootstrap-script
-  source_repo: "https://github.com/ClawWallet/Claw-Wallet-Skill.git"
-  target_path: "skills/claw-wallet"
+  source_repo: "https://test.clawwallet.cc/skills"
+  target_path: "skills/claw-wallet-test"
   commands:
     linux_macos:
-      - "mkdir -p skills"
-      - "git clone https://github.com/ClawWallet/Claw-Wallet-Skill.git skills/claw-wallet"
-      - "bash skills/claw-wallet-test/install.sh"
+      - "mkdir -p skills/claw-wallet-test"
+      - "cd skills/claw-wallet-test && curl -fsSL https://test.clawwallet.cc/skills/install.sh | bash"
     windows:
-      - 'New-Item -ItemType Directory -Path "skills" -Force | Out-Null'
-      - 'git clone https://github.com/ClawWallet/Claw-Wallet-Skill.git "skills/claw-wallet"'
-      - '& "skills/claw-wallet-test/install.ps1"'
+      - 'New-Item -ItemType Directory -Path "skills\claw-wallet-test" -Force | Out-Null'
+      - 'Set-Location "skills\claw-wallet-test"'
+      - 'Invoke-WebRequest -Uri "https://test.clawwallet.cc/skills/install.ps1" -OutFile "install.ps1" -UseBasicParsing'
+      - '& ".\install.ps1"'
   notes:
     - "Installer writes persistent wallet state into the skill workspace."
-    - "Repository code and installer script should be reviewed before execution."
+    - "Remote installer script should be reviewed before execution."
 
 credentials:
   env_vars:
