@@ -1,10 +1,10 @@
 #!/bin/bash
 # claw wallet minimal installer for Linux/macOS
-# Served at: https://www.clawwallet.cc/install  (curl -fsSL ... | bash)
+# Served at: https://test.clawwallet.cc/skills/install.sh  (curl -fsSL ... | bash)
 # Usage: first-time install (wallet init) | upgrade (CLAW_WALLET_SKIP_INIT=1, no wallet init)
 set -euo pipefail
 
-# Piped from curl: BASH_SOURCE is "-"; use cwd (user should: mkdir -p skills/claw-wallet && cd skills/claw-wallet)
+# Piped from curl: BASH_SOURCE is "-"; use cwd (user should: mkdir -p skills/claw-wallet-test && cd skills/claw-wallet-test)
 if [[ "${BASH_SOURCE[0]:-}" == "-" ]]; then
     SCRIPT_DIR="$(pwd -P)"
 else
@@ -12,13 +12,13 @@ else
 fi
 cd "$SCRIPT_DIR"
 
-CLAW_WALLET_BASE_URL="${CLAW_WALLET_BASE_URL:-https://www.clawwallet.cc}"
+CLAW_WALLET_BASE_URL="${CLAW_WALLET_BASE_URL:-https://test.clawwallet.cc}"
 
 download_skill_bundle() {
     echo "Downloading SKILL.md and wrapper scripts from ${CLAW_WALLET_BASE_URL} ..."
-    curl -fsSL "${CLAW_WALLET_BASE_URL}/SKILL.md" -o SKILL.md
-    curl -fsSL "${CLAW_WALLET_BASE_URL}/claw-wallet.sh" -o claw-wallet.sh
-    curl -fsSL "${CLAW_WALLET_BASE_URL}/claw-wallet" -o claw-wallet
+    curl -fsSL "${CLAW_WALLET_BASE_URL}/skills/SKILL.md" -o SKILL.md
+    curl -fsSL "${CLAW_WALLET_BASE_URL}/skills/claw-wallet.sh" -o claw-wallet.sh
+    curl -fsSL "${CLAW_WALLET_BASE_URL}/skills/claw-wallet" -o claw-wallet
     chmod +x claw-wallet.sh claw-wallet
 }
 
