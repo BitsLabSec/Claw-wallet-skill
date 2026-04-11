@@ -102,9 +102,9 @@ if ($env:CLAW_WALLET_SKIP_INIT -ne "1") {
 }
 
 # --- Common: final messages ---
-Write-Host "Check .env.clay for CLAY_SANDBOX_URL and CLAY_AGENT_TOKEN (or AGENT_TOKEN)."
-Write-Host "HTTP clients (curl, agents) must call protected APIs with: Authorization: Bearer <same token>."
-Write-Host "The same value is duplicated in identity.json as agent_token. See SKILL.md section 'HTTP authentication (sandbox)'."
+Write-Host "Check .env.clay for CLAY_SANDBOX_URL. CLAY_AGENT_TOKEN / AGENT_TOKEN is optional; when present it is used for protected APIs."
+Write-Host "HTTP clients (curl, agents) must call protected APIs with: Authorization: Bearer <token> only when a token is configured."
+Write-Host "When present, the same value is duplicated in identity.json as agent_token. See SKILL.md section 'HTTP authentication (sandbox)'."
 Write-Host "Sandbox binary refreshed at: $BinaryTarget"
 
 # Identity and config are persistent. To reset, delete .env.clay, identity.json and share3.json.

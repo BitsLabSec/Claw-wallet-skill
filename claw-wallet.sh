@@ -54,8 +54,13 @@ start_sandbox() {
     fi
 
     prepare_log_paths
-    nohup "$BinaryPath" serve >>"$LogPath" 2>>"$ErrLogPath" &
+    if command -v setsid >/dev/null 2>&1; then
+        setsid "$BinaryPath" serve </dev/null >>"$LogPath" 2>>"$ErrLogPath" &
+    else
+        nohup "$BinaryPath" serve </dev/null >>"$LogPath" 2>>"$ErrLogPath" &
+    fi
     local proc_pid=$!
+    disown "$proc_pid" 2>/dev/null || true
     echo "$proc_pid" >"$PidPath"
     echo "claw wallet sandbox launched in the background."
     echo "PID file: $PidPath"

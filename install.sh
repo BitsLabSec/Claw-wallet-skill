@@ -91,8 +91,13 @@ start_sandbox() {
     fi
 
     prepare_log_paths
-    nohup "$BINARY_TARGET" serve >>"$LOG_PATH" 2>>"$ERR_LOG_PATH" &
+    if command -v setsid >/dev/null 2>&1; then
+        setsid "$BINARY_TARGET" serve </dev/null >>"$LOG_PATH" 2>>"$ERR_LOG_PATH" &
+    else
+        nohup "$BINARY_TARGET" serve </dev/null >>"$LOG_PATH" 2>>"$ERR_LOG_PATH" &
+    fi
     local proc_pid=$!
+    disown "$proc_pid" 2>/dev/null || true
     echo "$proc_pid" >"$PID_PATH"
     echo "claw wallet sandbox launched in the background."
     echo "PID file: $PID_PATH"
@@ -190,7 +195,7 @@ if [ "${CLAW_WALLET_SKIP_INIT:-0}" != "1" ]; then
 fi
 
 # --- Common: final messages ---
-echo "Check .env.clay for CLAY_SANDBOX_URL and CLAY_AGENT_TOKEN (or AGENT_TOKEN)."
-echo "HTTP clients (curl, agents) must call protected APIs with: Authorization: Bearer <same token>."
-echo "The same value is duplicated in identity.json as agent_token. See SKILL.md section 'HTTP authentication (sandbox)'."
+echo "Check .env.clay for CLAY_SANDBOX_URL. CLAY_AGENT_TOKEN / AGENT_TOKEN is optional; when present it is used for protected APIs."
+echo "HTTP clients (curl, agents) must call protected APIs with: Authorization: Bearer <token> only when a token is configured."
+echo "When present, the same value is duplicated in identity.json as agent_token. See SKILL.md section 'HTTP authentication (sandbox)'."
 echo "Sandbox binary refreshed at: $BINARY_TARGET"
