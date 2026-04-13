@@ -96,7 +96,7 @@ Optional: override the download host with environment variable **`CLAW_WALLET_BA
 
 After the installer finishes, immediately run the status disclosure flow and emit the fixed disclosure format below.
 
-After install, use `GET {CLAY_SANDBOX_URL}/api/v1/wallet/status` with `Authorization: Bearer <token>` — confirm wallet is ready. The response includes **address information** and **uid** (when present). **You must show the user:** **wallet addresses** (from the response), **uid** (from the response when present) ( HTTP API under `/api/v1/…`, Swagger at `/docs`, same origin).  read it only from `.env.clay` / `identity.json` for `Authorization` (see **HTTP authentication (sandbox)** below).
+After install, use `GET {CLAY_SANDBOX_URL}/api/v1/wallet/status` with `Authorization: Bearer <token>` — confirm wallet is ready. The response includes **address information** and **uid** (when present). **You must show the user:** **wallet addresses** (from the response), **uid** (from the response when present) ( HTTP API under `/api/v1/...`, Swagger at `/docs`, same origin).  read it only from `.env.clay` / `identity.json` for `Authorization` (see **HTTP authentication (sandbox)** below).
 
 Use this **exact format** to respond to the user after finishing the install:
 
@@ -118,7 +118,7 @@ Use this **exact format** to respond to the user after finishing the install:
 
 ### Register and bind (website vs agent)
 
-**End users (browser):** Open `https://www.clawwallet.cc/claim/<uid>` in the browser, substituting `<uid>` with the wallet **uid** from `wallet/status`, to start the bind flow; the `/claim/…` path **must** include that uid (see [Claw Wallet](https://www.clawwallet.cc/)).
+**End users (browser):** Open `https://www.clawwallet.cc/claim/<uid>` in the browser, substituting `<uid>` with the wallet **uid** from `wallet/status`, to start the bind flow; the `/claim/...` path **must** include that uid (see [Claw Wallet](https://www.clawwallet.cc/)).
 
 **Agents (automating bind after the user starts the flow):** The user will obtain a **`message_hash_hex`** from the Claw bind / challenge step and paste or send it to you. You must call the **sandbox** bind API with the same bearer token used for all authenticated sandbox requests.
 
@@ -162,7 +162,7 @@ After install or relaunch, verify:
 
 ## HTTP authentication (sandbox)
 
-- **Most** routes under `/api/v1/…` (wallet status, sign, transfer, etc.) require:
+- **Most** routes under `/api/v1/...` (wallet status, sign, transfer, etc.) require:
   - `Authorization: Bearer <token>`
   - where `<token>` is **exactly** the same value as `AGENT_TOKEN` / `CLAY_AGENT_TOKEN`.
 - **Typical failure without the header:** HTTP **401** with body `Unauthorized: invalid claw wallet sandbox token`.
@@ -171,7 +171,7 @@ After install or relaunch, verify:
 
 | Location | Field(s) |
 |----------|-----------|
-| `skills/claw-wallet/.env.clay` | **`CLAY_SANDBOX_URL`** — base URL (scheme, host, port) for the sandbox HTTP server (API `/api/v1/…`, `/docs`). Also `CLAY_AGENT_TOKEN` or `AGENT_TOKEN` (same value; installer/bootstrap writes both). |
+| `skills/claw-wallet/.env.clay` | **`CLAY_SANDBOX_URL`** — base URL (scheme, host, port) for the sandbox HTTP server (API `/api/v1/...`, `/docs`). Also `CLAY_AGENT_TOKEN` or `AGENT_TOKEN` (same value; installer/bootstrap writes both). |
 | `skills/claw-wallet/identity.json` | `agent_token` |
 
 Example workspace test layout (same idea):
@@ -209,7 +209,7 @@ Re-download **`SKILL.md`**, wrapper scripts, and the sandbox binary from **`CLAW
 
 Ask the user for confirmation before upgrade, because it rewrites files in `skills/claw-wallet/**` and may restart the sandbox environment.
 
-Linux/macOS: the wrapper runs `curl -fsSL …/skills/install.sh | bash` with `CLAW_WALLET_SKIP_INIT=1`. Windows: downloads and runs **`/skills/install.ps1`** from the same host.
+Linux/macOS: the wrapper runs `curl -fsSL .../skills/install.sh | bash` with `CLAW_WALLET_SKIP_INIT=1`. Windows: downloads and runs **`/skills/install.ps1`** from the same host.
 
 Linux/macOS:
 
