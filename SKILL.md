@@ -135,7 +135,9 @@ Use this **exact format** to respond to the user after finishing the install:
 - use `skills/claw-wallet/claw-wallet.sh start` / `skills/claw-wallet/claw-wallet.ps1 start`
 - use `restart` if the process exists but is unhealthy
 - use `serve` only when you intentionally want a foreground process
-- `start` / `restart` will bring the sandbox up, and the sandbox startup path will automatically try one local reactivation for eligible local wallets. If the wallet is bound and requires dashboard unlock, that attempt can fail silently and the wallet stays locked.
+- Do not assume `start` / `restart` has already unlocked the wallet.
+- After `start` / `restart`, inspect `GET {CLAY_SANDBOX_URL}/api/v1/wallet/status` and follow the wallet lock routing rules above.
+- For an unbound / local wallet, the agent should still explicitly try `POST {CLAY_SANDBOX_URL}/api/v1/wallet/reactivate` when `can_reactivate_locally` is `true`.
 - If the user wants balances or transaction history, call `POST {CLAY_SANDBOX_URL}/api/v1/wallet/refresh` first, or use `refreshAndAssets` for a fresh balance snapshot.
 
 ### Register and bind (website vs agent)
