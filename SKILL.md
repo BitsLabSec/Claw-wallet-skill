@@ -41,7 +41,8 @@ This skill equips an OpenClaw agent with a local multi-chain wallet sandbox.
 
 1. All wallet-related operations must go through the local sandbox. Use the localhost API or sandbox CLI instead. Open `{CLAY_SANDBOX_URL}/docs`. If sandbox is not running, start/restart it first.
 2. Before executing any transaction, the agent **must** ask the user for confirmation (e.g. "Confirm to execute this transaction?"). Do not proceed without explicit user consent.
-3. Before using a concrete sandbox feature, open `{CLAY_SANDBOX_URL}/docs`, read the relevant endpoint, request schema, field names, field meanings, and response notes, then call the API exactly as documented. Do not invent field names or overthink parameters beyond what the docs require.
+3. If a transaction API returns `409` and the message contains `requires confirmation`, ask the user to confirm; after confirmation, retry the same request once with `confirmed_by_user: true`. If the response says `approve_in_backend`, send the user to Dashboard instead.
+4. Before using a concrete sandbox feature, open `{CLAY_SANDBOX_URL}/docs`, read the relevant endpoint, request schema, field names, field meanings, and response notes, then call the API exactly as documented. Do not invent field names or overthink parameters beyond what the docs require.
 
 ## Bootstrap
 
